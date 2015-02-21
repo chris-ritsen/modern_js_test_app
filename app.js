@@ -1,26 +1,22 @@
 
 var express = require('express');
-
-var app = express();
-var router = express.Router();
-
 var taunus = require('taunus');
 var taunusExpress = require('taunus-express');
 
 var layout = function(model) {
+  var fs = require('fs');
   var angularTemplate = require('angular-template');
-  var html = require('fs').readFileSync('index.html');
+  var html = fs.readFileSync('index.html');
 
   var content;
   var partial;
 
   try {
-    partial = require('fs').readFileSync('views/' + model.action + '.html');
+    partial = fs.readFileSync('views/' + model.action + '.html');
   } catch (ex) {
-    partial = require('fs').readFileSync('views/main.html');
+    partial = fs.readFileSync('views/main.html');
   }
 
-  console.log('model', model.model);
   content = angularTemplate(partial, model.model);
 
   var data = {
@@ -28,9 +24,7 @@ var layout = function(model) {
     foo: true
   };
 
-  console.log(angularTemplate(html, data));
   return angularTemplate(html, data);
-  // return "<a href='/hello'>hello!</a>";
 }
 
 var options = {
@@ -38,9 +32,12 @@ var options = {
   routes: require('./routes')
 };
 
+var app = express();
+var router = express.Router();
+
 /* 1 */ router.use(express.static(__dirname));
-taunusExpress(taunus, app, options);
-/* 2 */ router.use('/*', express.static(__dirname + "/index.html"));
+/* 2 */ taunusExpress(taunus, app, options);
+/* 3 */ router.use('/*', express.static(__dirname + "/index.html"));
 
 app.listen(3000);
 app.use(router);
