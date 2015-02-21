@@ -1,4 +1,3 @@
-
 System.config({
   "baseURL": "/",
   "transpiler": "babel",
@@ -18,6 +17,7 @@ System.config({
     "lodash": "npm:lodash@3.3.0",
     "system-css": "npm:system-css@0.1.0",
     "system-json": "npm:system-json@0.0.2",
+    "taunus-express": "npm:taunus-express@2.1.0",
     "underscore": "npm:underscore@1.8.1",
     "github:angular/bower-angular-route@1.3.13": {
       "angular": "github:angular/bower-angular@1.3.13"

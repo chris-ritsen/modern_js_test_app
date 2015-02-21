@@ -9,9 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular-template": "^0.3.0",
     "babel": "^4.3.0",
     "express": "^4.11.2",
-    "systemjs": "^0.14.1"
+    "systemjs": "^0.14.1",
+    "taunus": "^4.1.8",
+    "taunus-express": "^2.1.0"
   },
   "jspm": {
     "directories": {
@@ -28,6 +31,7 @@
       "system-css": "npm:system-css@^0.1.0",
       "system-json": "npm:system-json@^0.0.2",
       "systemjs": "^0.14.1",
+      "taunus-express": "npm:taunus-express@^2.1.0",
       "underscore": "npm:underscore@^1.8.1"
     }
   },
