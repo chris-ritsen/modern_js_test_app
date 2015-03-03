@@ -11,10 +11,19 @@
   "dependencies": {
     "angular-template": "^0.3.0",
     "babel": "^4.3.0",
+    "eslint": "^0.15.1",
     "express": "^4.11.2",
+    "gulp-batch": "^1.0.5",
+    "gulp-filter": "^2.0.2",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^0.6.6",
+    "gulp-watch": "^4.1.1",
+    "lodash": "^3.3.1",
+    "node-sass": "^2.0.1",
     "systemjs": "^0.14.1",
     "taunus": "^4.1.8",
-    "taunus-express": "^2.1.0"
+    "taunus-express": "^2.1.0",
+    "websocket": "^1.0.17"
   },
   "jspm": {
     "directories": {
@@ -28,14 +37,24 @@
       "express": "npm:express@^4.11.2",
       "jquery": "github:components/jquery@^2.1.3",
       "lodash": "npm:lodash@^3.3.0",
+      "sass-flex-mixin": "npm:sass-flex-mixin@^1.0.0",
       "system-css": "npm:system-css@^0.1.0",
       "system-json": "npm:system-json@^0.0.2",
       "systemjs": "^0.14.1",
       "taunus-express": "npm:taunus-express@^2.1.0",
-      "underscore": "npm:underscore@^1.8.1"
+      "underscore": "npm:underscore@^1.8.1",
+      "websocket": "npm:websocket@^1.0.17"
     }
   },
   "devDependencies": {
-    "grunt-babel": "^4.0.0"
+    "babel-core": "^4.6.6",
+    "babel-loader": "^4.0.0",
+    "grunt-babel": "^4.0.0",
+    "gulp-eslint": "^0.5.0",
+    "gulp-shell": "^0.3.0",
+    "webpack": "^1.6.0"
+  },
+  "taunus": {
+    "views": ".bin/views"
   }
 }

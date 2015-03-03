@@ -1,44 +1,95 @@
 
-var express = require('express');
-var taunus = require('taunus');
-var taunusExpress = require('taunus-express');
+"use strict";
 
-var layout = function(model) {
-  var fs = require('fs');
-  var angularTemplate = require('angular-template');
-  var html = fs.readFileSync('index.html');
+let express = require("express");
+let path = require("path");
 
-  var content;
-  var partial;
+const port = 3000;
 
-  try {
-    partial = fs.readFileSync('views/' + model.action + '.html');
-  } catch (ex) {
-    partial = fs.readFileSync('views/main.html');
-  }
+let Chrome = require("chrome-remote-interface");
 
-  content = angularTemplate(partial, model.model);
+Chrome(function(chrome) {
+  chrome.Network.requestWillBeSent(function(params) {
+    // console.log(params.request.url);
+  });
 
-  var data = {
-    content: content,
-    foo: true
-  };
+  chrome.Network.requestServedFromCache(function(params) {
+    // console.log(params.request.url);
+  });
 
-  return angularTemplate(html, data);
-}
+  chrome.Console.messageAdded(function(params) {
+    if (params && params.message && params.message.level === "log" && params.message.type === "log" && params.message.text) {
+      console.log(params.message.text);
+    }
+  });
 
-var options = {
-  layout: layout,
-  routes: require('./routes')
-};
+  // chrome.Page.loadEventFired(chrome.close);
+  chrome.Network.enable();
+  chrome.Page.enable();
 
-var app = express();
-var router = express.Router();
+  chrome.once("ready", function() {
+    chrome.Page.navigate({
+      "url": "http://localhost:3000/promise"
+    });
+
+    chrome.Console.clearMessages();
+    chrome.Console.enable();
+  });
+
+}).on("error", function() {
+  console.error("Cannot connect to Chrome");
+});
+
+let app = express();
+let router = express.Router();
 
 /* 1 */ router.use(express.static(__dirname));
-/* 2 */ taunusExpress(taunus, app, options);
-/* 3 */ router.use('/*', express.static(__dirname + "/index.html"));
 
-app.listen(3000);
+(function taunusMiddleware() {
+  // TODO: Disabled for now; needs to compile view templates.
+  // return;
+
+  let routes = require("./controllers/routes");
+  let taunus = require("taunus");
+  let taunusExpress = require("taunus-express");
+
+  let layout = function(model) {
+    let fs = require("fs");
+    let angularTemplate = require("angular-template");
+
+    let content;
+    let data;
+    let html;
+    let partial;
+
+    try {
+      partial = fs.readFileSync(path.join("views/", model.action, ".html"));
+    } catch (ex) {
+      partial = fs.readFileSync("views/main.html");
+    }
+
+    content = angularTemplate(partial, model.model);
+
+    data = {
+      "content": content,
+      "foo": true
+    };
+
+    html = fs.readFileSync("index.html");
+
+    return angularTemplate(html, data);
+  };
+
+  let options = {
+    "layout": layout,
+    "routes": routes
+  };
+
+  /* 2 */ taunusExpress(taunus, app, options);
+})();
+
+/* 3 */ router.use("/*", express.static(path.join(__dirname, "/index.html")));
+
+app.listen(port);
 app.use(router);
 

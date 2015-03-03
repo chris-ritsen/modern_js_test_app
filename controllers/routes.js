@@ -7,6 +7,10 @@ module.exports = [
   {
     action: "hello",
     route: "/hello"
+  },
+  {
+    action: "promise",
+    route: "/promise"
   }
 ];
 
