@@ -18,7 +18,8 @@ Chrome(function(chrome) {
   });
 
   chrome.Console.messageAdded(function(params) {
-    if (params && params.message && params.message.level === "log" && params.message.type === "log" && params.message.text) {
+    if (params && params.message && params.message.level === "log" &&
+        params.message.type === "log" && params.message.text) {
       console.log(params.message.text);
     }
   });

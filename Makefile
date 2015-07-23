@@ -1,8 +1,14 @@
 
-sass:
-	@#node-sass --source-map www/main.css.map --output-style compressed scss/*.scss www/*.css
+scss:
 	@sassc --sourcemap scss/*.scss www/main.css
+
+clean:
+	@rm -rf www/*
 
 watch:
 	gulp lint
+
+all: clean 
+
+.PHONY: all
 

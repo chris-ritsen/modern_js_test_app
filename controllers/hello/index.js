@@ -4,7 +4,7 @@
 module.exports = function(request, response, next) {
   response.viewModel = {
     model: {
-      greeting: "Hello Angular!"
+      "greeting": "Hello Angular!"
     }
   };
 
